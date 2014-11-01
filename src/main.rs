@@ -26,19 +26,7 @@ fn main() {
         for branch in get_branches(&repo).into_iter() {
             let new_oid = store[branch.get().target().unwrap()].new_commit.borrow().as_ref().unwrap().id();
             let new_commit = repo.find_commit(new_oid).unwrap();
-            if branch.is_head() {
-                let old_name = branch.name().unwrap().unwrap();
-                let new_name = format!("preanonymous_{}", old_name);
-                let mut mut_branch = repo.find_branch(old_name, BranchLocal).unwrap();
-                mut_branch.rename(new_name[], false, None, "Renamed branch before deletion.").unwrap();
-                repo.branch(old_name, &new_commit, false, None, None).unwrap();
-                let tree = repo.find_tree(repo.find_commit(new_oid).unwrap().tree_id()).unwrap();
-                let parents_vals = get_parents(branch.get().target().unwrap(), &repo, &store);
-                let parents: Vec<_> = parents_vals.iter().map(|commit| commit).collect();
-                repo.commit(Some("HEAD"), &new_commit.author(), &new_commit.committer(),
-                            new_commit.message().unwrap(), &tree, parents[]).unwrap();
-                mut_branch.delete().unwrap();
-            } else {
+            if !branch.is_head() {
                 repo.branch(branch.name().unwrap().unwrap(), &new_commit, true, None, None).unwrap();
             }
         }
@@ -92,7 +80,12 @@ fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &'a HashM
                let message = data.commit.message().unwrap();
                let parents_vals = get_parents(oid, repo, store);
                let parents: Vec<_> = parents_vals.iter().map(|commit| commit).collect();
-               let new_oid = repo.commit(None, &author.unwrap(), &committer.unwrap(), message,
+               let update_ref = if repo.head().unwrap().target().unwrap() == oid {
+                   Some("HEAD")
+               } else {
+                   None
+               };
+               let new_oid = repo.commit(update_ref, &author.unwrap(), &committer.unwrap(), message,
                             tree, parents[]).unwrap();
                {
                    let mut new_commit = data.new_commit.borrow_mut();
