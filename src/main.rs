@@ -102,9 +102,8 @@ fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &'a HashM
 }
 
 fn get_parents<'a>(oid: Oid, repo: &'a Repository, store: &'a HashMap<Oid, Data<'a>>) -> Vec<Commit<'a>> {
-    let data = store.index(&oid);
-    data.commit.parents().map(|commit| {
-        repo.find_commit(commit.id()).unwrap()
+    store[oid].commit.parents().map(|commit| {
+        repo.find_commit(store[commit.id()].new_commit.borrow().as_ref().unwrap().id()).unwrap()
     }).collect()
 }
 
