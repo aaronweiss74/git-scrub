@@ -4,7 +4,7 @@ extern crate git2;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::os::args;
-use git2::{Branch, BranchLocal, Commit, Oid, Repository, Signature, Tree};
+use git2::{Branch, BranchLocal, Commit, Hard, ObjectCommit, Oid, Repository, Signature, Tree};
 
 fn main() {
     for path_str in args()[1..].iter() {
@@ -25,9 +25,12 @@ fn main() {
         }
         for branch in get_branches(&repo).into_iter() {
             let new_oid = store[branch.get().target().unwrap()].new_commit.borrow().as_ref().unwrap().id();
-            let new_commit = repo.find_commit(new_oid).unwrap();
             if !branch.is_head() {
+                let new_commit = repo.find_commit(new_oid).unwrap();
                 repo.branch(branch.name().unwrap().unwrap(), &new_commit, true, None, None).unwrap();
+            } else {
+                let new_commit = repo.find_object(new_oid, Some(ObjectCommit)).unwrap();
+                repo.reset(&new_commit, Hard, None, None).unwrap();
             }
         }
     }
@@ -80,12 +83,7 @@ fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &'a HashM
                let message = data.commit.message().unwrap();
                let parents_vals = get_parents(oid, repo, store);
                let parents: Vec<_> = parents_vals.iter().map(|commit| commit).collect();
-               let update_ref = if repo.head().unwrap().target().unwrap() == oid {
-                   Some("HEAD")
-               } else {
-                   None
-               };
-               let new_oid = repo.commit(update_ref, &author.unwrap(), &committer.unwrap(), message,
+               let new_oid = repo.commit(None, &author.unwrap(), &committer.unwrap(), message,
                             tree, parents[]).unwrap();
                {
                    let mut new_commit = data.new_commit.borrow_mut();
