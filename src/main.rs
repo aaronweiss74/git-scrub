@@ -4,7 +4,7 @@ extern crate git2;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::os::args;
-use git2::{Branch, BranchLocal, Commit, Hard, ObjectCommit, Oid, Repository, Signature, Tree};
+use git2::{Branch, BranchType, Commit, Hard, ObjectType, Oid, Repository, Signature, Tree};
 
 fn main() {
     for path_str in args()[1..].iter() {
@@ -29,7 +29,7 @@ fn main() {
                 let new_commit = repo.find_commit(new_oid).unwrap();
                 repo.branch(branch.name().unwrap().unwrap(), &new_commit, true, None, None).unwrap();
             } else {
-                let new_commit = repo.find_object(new_oid, Some(ObjectCommit)).unwrap();
+                let new_commit = repo.find_object(new_oid, Some(ObjectType::Commit)).unwrap();
                 repo.reset(&new_commit, Hard, None, None).unwrap();
             }
         }
@@ -44,7 +44,7 @@ fn get_repository(path_str: &str) -> Repository {
 }
 
 fn get_branches<'a>(repo: &'a Repository) -> Vec<Branch<'a>> {
-    repo.branches(Some(BranchLocal)).unwrap().map(|tup| tup.val0()).collect()
+    repo.branches(Some(BranchType::Local)).unwrap().map(|tup| tup.val0()).collect()
 }
 
 fn populate_from_branch<'a>(branch: Branch<'a>, repo: &'a Repository, store: &mut HashMap<Oid, Data<'a>>, roots: &mut Vec<Oid>) {
