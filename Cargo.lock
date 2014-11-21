@@ -1,0 +1,54 @@
+[root]
+name = "git-scrub"
+version = "0.0.1"
+dependencies = [
+ "git2 0.0.1 (git+https://github.com/alexcrichton/git2-rs)",
+]
+
+[[package]]
+name = "encoding"
+version = "0.1.0"
+source = "git+https://github.com/lifthrasiir/rust-encoding#6daaad9f4c0fcde4525821032686090d6426c462"
+
+[[package]]
+name = "git2"
+version = "0.0.1"
+source = "git+https://github.com/alexcrichton/git2-rs#35a0632e92d63de8218675a17cd81e15d0de44b4"
+dependencies = [
+ "libgit2 0.0.1 (git+https://github.com/alexcrichton/git2-rs)",
+ "url 0.1.0 (git+https://github.com/servo/rust-url)",
+]
+
+[[package]]
+name = "libgit2"
+version = "0.0.1"
+source = "git+https://github.com/alexcrichton/git2-rs#35a0632e92d63de8218675a17cd81e15d0de44b4"
+dependencies = [
+ "libssh2-static-sys 0.0.1 (git+https://github.com/alexcrichton/libssh2-static-sys)",
+ "link-config 0.0.1 (git+https://github.com/alexcrichton/link-config)",
+ "openssl-static-sys 0.0.1 (git+https://github.com/alexcrichton/openssl-static-sys)",
+]
+
+[[package]]
+name = "libssh2-static-sys"
+version = "0.0.1"
+source = "git+https://github.com/alexcrichton/libssh2-static-sys#80e71a3021618eb05656c58fb7c5ef5f12bc747f"
+
+[[package]]
+name = "link-config"
+version = "0.0.1"
+source = "git+https://github.com/alexcrichton/link-config#7c56ef12c8a49bedb0357e2a50af9ba79bf0ae1b"
+
+[[package]]
+name = "openssl-static-sys"
+version = "0.0.1"
+source = "git+https://github.com/alexcrichton/openssl-static-sys#2e1c50a7f35ef52ce38dbd405a175b6dccc0ebad"
+
+[[package]]
+name = "url"
+version = "0.1.0"
+source = "git+https://github.com/servo/rust-url#9142b86a812ac5bc886f76235585557d8e002246"
+dependencies = [
+ "encoding 0.1.0 (git+https://github.com/lifthrasiir/rust-encoding)",
+]
+
