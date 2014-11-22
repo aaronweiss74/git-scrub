@@ -5,4 +5,4 @@ version = "0.0.1"
 authors = ["Aaron Weiss <aaronweiss74@gmail.com>"]
 
 [dependencies.git2]
-git = "https://github.com/alexcrichton/git2-rs"
+git2 = "~0.0.1"
