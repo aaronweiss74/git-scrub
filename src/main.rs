@@ -4,7 +4,7 @@ extern crate git2;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::os::args;
-use git2::{Branch, BranchType, Commit, Hard, ObjectType, Oid, Repository, Signature, Tree};
+use git2::{Branch, BranchType, Commit, ResetType, ObjectType, Oid, Repository, Signature, Tree};
 
 fn main() {
     for path_str in args()[1..].iter() {
@@ -30,7 +30,7 @@ fn main() {
                 repo.branch(branch.name().unwrap().unwrap(), &new_commit, true, None, None).unwrap();
             } else {
                 let new_commit = repo.find_object(new_oid, Some(ObjectType::Commit)).unwrap();
-                repo.reset(&new_commit, Hard, None, None).unwrap();
+                repo.reset(&new_commit, ResetType::Hard, None, None).unwrap();
             }
         }
     }
