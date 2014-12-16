@@ -13,20 +13,20 @@ source = "git+https://github.com/alexcrichton/gcc-rs#d35c34c871dd75f97fadf04cb0e
 [[package]]
 name = "git2"
 version = "0.0.1"
-source = "git+https://github.com/alexcrichton/git2-rs#fda0c5dbcc5ab59cc6b6fe5049be7a4d0b2a4ed7"
+source = "git+https://github.com/alexcrichton/git2-rs#6530041ad9cd746bbdc1eed7fbe5c82dba6c8cb1"
 dependencies = [
  "libgit2-sys 0.0.1 (git+https://github.com/alexcrichton/git2-rs)",
- "time 0.1.1 (git+https://github.com/rust-lang/time)",
- "url 0.2.3 (git+https://github.com/servo/rust-url)",
+ "time 0.1.2 (git+https://github.com/rust-lang/time)",
+ "url 0.2.5 (git+https://github.com/servo/rust-url)",
 ]
 
 [[package]]
 name = "libgit2-sys"
 version = "0.0.1"
-source = "git+https://github.com/alexcrichton/git2-rs#fda0c5dbcc5ab59cc6b6fe5049be7a4d0b2a4ed7"
+source = "git+https://github.com/alexcrichton/git2-rs#6530041ad9cd746bbdc1eed7fbe5c82dba6c8cb1"
 dependencies = [
  "libssh2-sys 0.0.1 (git+https://github.com/alexcrichton/ssh2-rs)",
- "openssl-sys 0.2.3 (git+https://github.com/sfackler/rust-openssl)",
+ "openssl-sys 0.2.4 (git+https://github.com/sfackler/rust-openssl)",
  "pkg-config 0.1.1 (git+https://github.com/alexcrichton/pkg-config-rs)",
 ]
 
@@ -41,10 +41,10 @@ dependencies = [
 [[package]]
 name = "libssh2-sys"
 version = "0.0.1"
-source = "git+https://github.com/alexcrichton/ssh2-rs#5319ce3a7dc4d417af9d94b8671c41ad43018b10"
+source = "git+https://github.com/alexcrichton/ssh2-rs#43996526768a6cfce9c2c3111210054f0c75f406"
 dependencies = [
  "libz-sys 0.1.0 (git+https://github.com/alexcrichton/libz-sys)",
- "openssl-sys 0.2.3 (git+https://github.com/sfackler/rust-openssl)",
+ "openssl-sys 0.2.4 (git+https://github.com/sfackler/rust-openssl)",
  "pkg-config 0.1.1 (git+https://github.com/alexcrichton/pkg-config-rs)",
 ]
 
@@ -58,8 +58,8 @@ dependencies = [
 
 [[package]]
 name = "openssl-sys"
-version = "0.2.3"
-source = "git+https://github.com/sfackler/rust-openssl#9754b8e47db5faff2930ed070527d2d71e76e094"
+version = "0.2.4"
+source = "git+https://github.com/sfackler/rust-openssl#f299e336d06a85438c3ee90aa06235510f3f5dbe"
 dependencies = [
  "libressl-pnacl-sys 2.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "pkg-config 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -82,14 +82,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "time"
-version = "0.1.1"
-source = "git+https://github.com/rust-lang/time#288b362e0d3cd9e36a4654c9520e021587f707d1"
+version = "0.1.2"
+source = "git+https://github.com/rust-lang/time#0e9230893ef6508f26fb270001e387fd680ef07d"
 dependencies = [
  "gcc 0.1.1 (git+https://github.com/alexcrichton/gcc-rs)",
 ]
 
 [[package]]
 name = "url"
-version = "0.2.3"
-source = "git+https://github.com/servo/rust-url#1c738d2640731f6da58b85bb5a04883b81835b66"
+version = "0.2.5"
+source = "git+https://github.com/servo/rust-url#c177fb35e9158065c1b4d0760583549bc0c3334c"
 

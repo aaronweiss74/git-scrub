@@ -44,7 +44,7 @@ fn get_repository(path_str: &str) -> Repository {
 }
 
 fn get_branches<'a>(repo: &'a Repository) -> Vec<Branch<'a>> {
-    repo.branches(Some(BranchType::Local)).unwrap().map(|tup| tup.val0()).collect()
+    repo.branches(Some(BranchType::Local)).unwrap().map(|tup| tup.0).collect()
 }
 
 fn populate_from_branch<'a>(branch: Branch<'a>, repo: &'a Repository, store: &mut HashMap<Oid, Data<'a>>, roots: &mut Vec<Oid>) {
