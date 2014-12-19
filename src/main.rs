@@ -48,7 +48,7 @@ fn get_branches<'a>(repo: &'a Repository) -> Vec<Branch<'a>> {
 }
 
 fn populate_from_branch<'a>(branch: Branch<'a>, repo: &'a Repository, store: &mut HashMap<Oid, Data<'a>>, roots: &mut Vec<Oid>) {
-    populate(repo.find_commit(branch.unwrap().target().unwrap()).unwrap(), store, roots);
+    populate(repo.find_commit(branch.into_reference().target().unwrap()).unwrap(), store, roots);
 }
 
 fn populate<'a>(commit: Commit<'a>, store: &mut HashMap<Oid, Data<'a>>, roots: &mut Vec<Oid>) {
