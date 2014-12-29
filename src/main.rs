@@ -76,10 +76,12 @@ fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &'a HashM
            data.commit.author().email().unwrap() != "anon@ymo.us" &&
            data.commit.committer().name().unwrap() != "Anonymous" &&
            data.commit.committer().email().unwrap() != "anon@ymo.us" {
-               let author = Signature::new("Anonymous", "anon@ymo.us",
-                            data.commit.author().when(), data.commit.author().when_offset());
+               let author = Signature::new("Anonymous", "anon@ymo.us", 
+                                           data.commit.author().when().seconds() as u64,
+                                           data.commit.author().when().offset_minutes());
                let committer = Signature::new("Anonymous", "anon@ymo.us",
-                            data.commit.committer().when(), data.commit.committer().when_offset());
+                                              data.commit.committer().when().seconds() as u64, 
+                                              data.commit.committer().when().offset_minutes());
                let message = data.commit.message().unwrap();
                let parents_vals = get_parents(oid, repo, store);
                let parents: Vec<_> = parents_vals.iter().map(|commit| commit).collect();
