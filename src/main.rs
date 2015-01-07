@@ -68,7 +68,7 @@ fn populate<'a>(commit: Commit<'a>, store: &mut HashMap<Oid, Data<'a>>, roots: &
 
 fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &'a HashMap<Oid, Data<'a>>) {
     let ref data = store[oid];
-    let is_rebuilt = |c: Commit, store: &HashMap<Oid, Data>| {
+    let is_rebuilt = |&: c: Commit, store: &HashMap<Oid, Data>| {
         store[c.id()].new_commit.borrow().is_some()
     };
     if data.new_commit.borrow().is_none() && data.commit.parents().all(|c| is_rebuilt(c, store)) {
