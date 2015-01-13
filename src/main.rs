@@ -1,3 +1,4 @@
+#![allow(unstable)]
 #![feature(slicing_syntax)]
 extern crate git2;
 
@@ -9,7 +10,7 @@ use git2::{Branch, BranchType, Commit, ResetType, ObjectType, Oid, Repository, S
 fn main() {
     for path_str in args()[1..].iter() {
         let mut store: HashMap<Oid, Data> = HashMap::new();
-        let repo = get_repository(path_str[]);
+        let repo = get_repository(&path_str[]);
         let mut roots = Vec::new();
         for branch in get_branches(&repo).into_iter() {
             populate_from_branch(branch, &repo, &mut store, &mut roots)
@@ -30,7 +31,7 @@ fn main() {
                 repo.branch(branch.name().unwrap().unwrap(), &new_commit, true, None, None).unwrap();
             } else {
                 let new_commit = repo.find_object(new_oid, Some(ObjectType::Commit)).unwrap();
-                repo.reset(&new_commit, ResetType::Hard, None, None).unwrap();
+                repo.reset(&new_commit, ResetType::Hard, None, None, None).unwrap();
             }
         }
     }
@@ -76,17 +77,13 @@ fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &'a HashM
            data.commit.author().email().unwrap() != "anon@ymo.us" &&
            data.commit.committer().name().unwrap() != "Anonymous" &&
            data.commit.committer().email().unwrap() != "anon@ymo.us" {
-               let author = Signature::new("Anonymous", "anon@ymo.us", 
-                                           data.commit.author().when().seconds() as u64,
-                                           data.commit.author().when().offset_minutes());
-               let committer = Signature::new("Anonymous", "anon@ymo.us",
-                                              data.commit.committer().when().seconds() as u64, 
-                                              data.commit.committer().when().offset_minutes());
+               let author = Signature::new("Anonymous", "anon@ymo.us", &data.commit.author().when());
+               let committer = Signature::new("Anonymous", "anon@ymo.us", &data.commit.committer().when());
                let message = data.commit.message().unwrap();
                let parents_vals = get_parents(oid, repo, store);
                let parents: Vec<_> = parents_vals.iter().map(|commit| commit).collect();
                let new_oid = repo.commit(None, &author.unwrap(), &committer.unwrap(), message,
-                            tree, parents[]).unwrap();
+                            tree, &parents[]).unwrap();
                {
                    let mut new_commit = data.new_commit.borrow_mut();
                    *new_commit = Some(repo.find_commit(new_oid).unwrap());
