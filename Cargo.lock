@@ -2,26 +2,33 @@
 name = "git-scrub"
 version = "0.0.1"
 dependencies = [
- "git2 0.1.10 (git+https://github.com/alexcrichton/git2-rs)",
+ "git2 0.1.11 (git+https://github.com/alexcrichton/git2-rs)",
 ]
 
 [[package]]
+name = "bitflags"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "git2"
-version = "0.1.10"
-source = "git+https://github.com/alexcrichton/git2-rs#f4c573af2e51e7603bca9f525b0b00bbd2672e54"
+version = "0.1.11"
+source = "git+https://github.com/alexcrichton/git2-rs#ee2c21155c76dac8c96464c3830debf5477131fb"
 dependencies = [
- "libgit2-sys 0.1.7 (git+https://github.com/alexcrichton/git2-rs)",
+ "bitflags 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libgit2-sys 0.1.8 (git+https://github.com/alexcrichton/git2-rs)",
  "url 0.2.16 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "libgit2-sys"
-version = "0.1.7"
-source = "git+https://github.com/alexcrichton/git2-rs#f4c573af2e51e7603bca9f525b0b00bbd2672e54"
+version = "0.1.8"
+source = "git+https://github.com/alexcrichton/git2-rs#ee2c21155c76dac8c96464c3830debf5477131fb"
 dependencies = [
  "libssh2-sys 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "openssl-sys 0.2.15 (registry+https://github.com/rust-lang/crates.io-index)",
- "pkg-config 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libz-sys 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "openssl-sys 0.2.16 (registry+https://github.com/rust-lang/crates.io-index)",
+ "pkg-config 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -38,8 +45,8 @@ version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "libz-sys 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "openssl-sys 0.2.15 (registry+https://github.com/rust-lang/crates.io-index)",
- "pkg-config 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "openssl-sys 0.2.16 (registry+https://github.com/rust-lang/crates.io-index)",
+ "pkg-config 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -47,7 +54,7 @@ name = "libz-sys"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "pkg-config 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "pkg-config 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -57,16 +64,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "openssl-sys"
-version = "0.2.15"
+version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "libressl-pnacl-sys 2.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "pkg-config 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "pkg-config 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "pkg-config"
-version = "0.1.4"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -76,7 +83,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "rustc-serialize"
-version = "0.2.7"
+version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -85,6 +92,6 @@ version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "matches 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-serialize 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
