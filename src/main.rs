@@ -1,5 +1,4 @@
-#![allow(unstable)]
-#![feature(slicing_syntax)]
+#![feature(core, os, path, slicing_syntax)]
 extern crate git2;
 
 use std::cell::RefCell;
@@ -9,8 +8,8 @@ use git2::{Branch, BranchType, Commit, ResetType, ObjectType, Oid, Repository, S
 
 fn main() {
     for path_str in args()[1..].iter() {
-        let mut store: HashMap<Oid, Data> = HashMap::new();
         let repo = get_repository(&path_str[]);
+        let mut store: HashMap<Oid, Data> = HashMap::new(); 
         let mut roots = Vec::new();
         for branch in get_branches(&repo).into_iter() {
             populate_from_branch(branch, &repo, &mut store, &mut roots)
