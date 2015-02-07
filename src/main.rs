@@ -1,14 +1,14 @@
-#![feature(core, os, path, slicing_syntax)]
+#![feature(core, env, os, path, slicing_syntax)]
 extern crate git2;
 
 use std::cell::RefCell;
 use std::collections::HashMap;
-use std::os::args;
+use std::env::args;
 use git2::{Branch, BranchType, Commit, ResetType, ObjectType, Oid, Repository, Signature, Tree};
 
 fn main() {
-    for path_str in args()[1..].iter() {
-        let repo = get_repository(&path_str[]);
+    for path_str in args().skip(1) {
+        let repo = get_repository(&path_str.into_string().unwrap()[]);
         let mut store: HashMap<Oid, Data> = HashMap::new(); 
         let mut roots = Vec::new();
         for branch in get_branches(&repo).into_iter() {
