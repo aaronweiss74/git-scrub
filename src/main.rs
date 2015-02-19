@@ -1,4 +1,4 @@
-#![feature(env, path, slicing_syntax)]
+#![feature(env, path)]
 extern crate git2;
 
 use std::cell::RefCell;

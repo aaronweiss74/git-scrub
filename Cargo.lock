@@ -26,13 +26,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "libc"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "libgit2-sys"
 version = "0.1.14"
 source = "git+https://github.com/alexcrichton/git2-rs#15f540d1bdc096e54a29de203ab1fb481daa06ee"
 dependencies = [
- "libssh2-sys 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libssh2-sys 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "libz-sys 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "openssl-sys 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "openssl-sys 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "pkg-config 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -46,11 +51,12 @@ dependencies = [
 
 [[package]]
 name = "libssh2-sys"
-version = "0.1.6"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
+ "libc 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "libz-sys 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "openssl-sys 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "openssl-sys 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "pkg-config 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -69,7 +75,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "openssl-sys"
-version = "0.4.1"
+version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "gcc 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
