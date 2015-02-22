@@ -1,4 +1,4 @@
-#![feature(env, path)]
+#![feature(env, old_path)]
 extern crate git2;
 
 use std::cell::RefCell;
@@ -66,7 +66,7 @@ fn populate<'a>(commit: Commit<'a>, store: &mut HashMap<Oid, Data<'a>>, roots: &
     }
 }
 
-fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &'a HashMap<Oid, Data<'a>>) {
+fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &HashMap<Oid, Data<'a>>) {
     let ref data = store[oid];
     let is_rebuilt = |&: c: Commit, store: &HashMap<Oid, Data>| {
         store[c.id()].new_commit.borrow().is_some()
@@ -82,7 +82,7 @@ fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &'a HashM
                let parents_vals = get_parents(oid, repo, store);
                let parents: Vec<_> = parents_vals.iter().map(|commit| commit).collect();
                let new_oid = repo.commit(None, &author.unwrap(), &committer.unwrap(), message,
-                            tree, &parents[]).unwrap();
+                            tree, &parents).unwrap();
                {
                    let mut new_commit = data.new_commit.borrow_mut();
                    *new_commit = Some(repo.find_commit(new_oid).unwrap());
@@ -99,7 +99,7 @@ fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &'a HashM
     }
 }
 
-fn get_parents<'a>(oid: Oid, repo: &'a Repository, store: &'a HashMap<Oid, Data<'a>>) -> Vec<Commit<'a>> {
+fn get_parents<'a>(oid: Oid, repo: &'a Repository, store: &HashMap<Oid, Data<'a>>) -> Vec<Commit<'a>> {
     store[oid].commit.parents().map(|commit| {
         repo.find_commit(store[commit.id()].new_commit.borrow().as_ref().unwrap().id()).unwrap()
     }).collect()
