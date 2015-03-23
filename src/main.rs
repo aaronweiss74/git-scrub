@@ -1,9 +1,9 @@
-#![feature(old_path)]
 extern crate git2;
 
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::env::args;
+use std::path::Path;
 use git2::{Branch, BranchType, Commit, ResetType, ObjectType, Oid, Repository, Signature, Tree};
 
 fn main() {
@@ -27,10 +27,10 @@ fn main() {
             let new_oid = store[branch.get().target().unwrap()].new_commit.borrow().as_ref().unwrap().id();
             if !branch.is_head() {
                 let new_commit = repo.find_commit(new_oid).unwrap();
-                repo.branch(branch.name().unwrap().unwrap(), &new_commit, true, None, None).unwrap();
+                repo.branch(branch.name().unwrap().unwrap(), &new_commit, true).unwrap();
             } else {
                 let new_commit = repo.find_object(new_oid, Some(ObjectType::Commit)).unwrap();
-                repo.reset(&new_commit, ResetType::Hard, None, None, None).unwrap();
+                repo.reset(&new_commit, ResetType::Hard, None).unwrap();
             }
         }
     }
