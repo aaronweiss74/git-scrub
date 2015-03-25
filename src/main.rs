@@ -56,10 +56,10 @@ fn populate<'a>(commit: Commit<'a>, store: &mut HashMap<Oid, Data<'a>>, roots: &
     if !store.contains_key(&oid) {
         store.insert(commit.id(), Data::new(commit));
     }
-    if (&mut store[oid]).commit.parents().next().is_none() {
+    if store.get_mut(&oid).unwrap().commit.parents().next().is_none() {
         roots.push(oid);
     } else {
-        let parents: Vec<Commit> = (&mut store[oid]).commit.parents().collect();
+        let parents: Vec<Commit> = store.get_mut(&oid).unwrap().commit.parents().collect();
         for parent in parents.into_iter() {
             populate(parent, store, roots);
         }

@@ -18,11 +18,11 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "git2"
 version = "0.2.5"
-source = "git+https://github.com/alexcrichton/git2-rs#bf37458739b5470e9cbee2001f595de302533d51"
+source = "git+https://github.com/alexcrichton/git2-rs#7ba50b6e2170cc73ee55b8de738cf9efb68b6646"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "libgit2-sys 0.2.5 (git+https://github.com/alexcrichton/git2-rs)",
+ "libgit2-sys 0.2.6 (git+https://github.com/alexcrichton/git2-rs)",
  "url 0.2.27 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -33,8 +33,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "libgit2-sys"
-version = "0.2.5"
-source = "git+https://github.com/alexcrichton/git2-rs#bf37458739b5470e9cbee2001f595de302533d51"
+version = "0.2.6"
+source = "git+https://github.com/alexcrichton/git2-rs#7ba50b6e2170cc73ee55b8de738cf9efb68b6646"
 dependencies = [
  "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "libssh2-sys 0.1.13 (registry+https://github.com/rust-lang/crates.io-index)",
