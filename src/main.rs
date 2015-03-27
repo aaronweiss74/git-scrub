@@ -16,7 +16,7 @@ fn main() {
         }
         for data in store.values() {
             for parent in data.commit.parents() {
-                store[parent.id()].children.borrow_mut().push(data.commit.id())
+                store[&parent.id()].children.borrow_mut().push(data.commit.id())
             }
         }
         for oid in roots.iter() {
@@ -24,7 +24,8 @@ fn main() {
             rebuild(*oid, &repo, &tree, &store);
         }
         for branch in get_branches(&repo).into_iter() {
-            let new_oid = store[branch.get().target().unwrap()].new_commit.borrow().as_ref().unwrap().id();
+            let new_oid = store[&branch.get().target().unwrap()].new_commit.borrow().as_ref()
+                                                                .unwrap().id();
             if !branch.is_head() {
                 let new_commit = repo.find_commit(new_oid).unwrap();
                 repo.branch(branch.name().unwrap().unwrap(), &new_commit, true).unwrap();
@@ -47,7 +48,8 @@ fn get_branches<'a>(repo: &'a Repository) -> Vec<Branch<'a>> {
     repo.branches(Some(BranchType::Local)).unwrap().map(|tup| tup.0).collect()
 }
 
-fn populate_from_branch<'a>(branch: Branch<'a>, repo: &'a Repository, store: &mut HashMap<Oid, Data<'a>>, roots: &mut Vec<Oid>) {
+fn populate_from_branch<'a>(branch: Branch<'a>, repo: &'a Repository, 
+                            store: &mut HashMap<Oid, Data<'a>>, roots: &mut Vec<Oid>) {
     populate(repo.find_commit(branch.into_reference().target().unwrap()).unwrap(), store, roots);
 }
 
@@ -67,17 +69,19 @@ fn populate<'a>(commit: Commit<'a>, store: &mut HashMap<Oid, Data<'a>>, roots: &
 }
 
 fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &HashMap<Oid, Data<'a>>) {
-    let ref data = store[oid];
+    let ref data = store[&oid];
     let is_rebuilt = |c: Commit, store: &HashMap<Oid, Data>| {
-        store[c.id()].new_commit.borrow().is_some()
+        store[&c.id()].new_commit.borrow().is_some()
     };
     if data.new_commit.borrow().is_none() && data.commit.parents().all(|c| is_rebuilt(c, store)) {
         if data.commit.author().name().unwrap() != "Anonymous" &&
            data.commit.author().email().unwrap() != "anon@ymo.us" &&
            data.commit.committer().name().unwrap() != "Anonymous" &&
            data.commit.committer().email().unwrap() != "anon@ymo.us" {
-               let author = Signature::new("Anonymous", "anon@ymo.us", &data.commit.author().when());
-               let committer = Signature::new("Anonymous", "anon@ymo.us", &data.commit.committer().when());
+               let author = Signature::new("Anonymous", "anon@ymo.us", 
+                                           &data.commit.author().when());
+               let committer = Signature::new("Anonymous", "anon@ymo.us", 
+                                              &data.commit.committer().when());
                let message = data.commit.message().unwrap();
                let parents_vals = get_parents(oid, repo, store);
                let parents: Vec<_> = parents_vals.iter().map(|commit| commit).collect();
@@ -99,9 +103,10 @@ fn rebuild<'a>(oid: Oid, repo: &'a Repository, tree: &Tree<'a>, store: &HashMap<
     }
 }
 
-fn get_parents<'a>(oid: Oid, repo: &'a Repository, store: &HashMap<Oid, Data<'a>>) -> Vec<Commit<'a>> {
-    store[oid].commit.parents().map(|commit| {
-        repo.find_commit(store[commit.id()].new_commit.borrow().as_ref().unwrap().id()).unwrap()
+fn get_parents<'a>(oid: Oid, repo: &'a Repository, store: &HashMap<Oid, Data<'a>>) 
+-> Vec<Commit<'a>> {
+    store[&oid].commit.parents().map(|commit| {
+        repo.find_commit(store[&commit.id()].new_commit.borrow().as_ref().unwrap().id()).unwrap()
     }).collect()
 }
 
